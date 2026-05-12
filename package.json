@@ -1,0 +1,57 @@
+{
+  "name": "@radon-be/quasar-app-extension-zod-form",
+  "version": "0.0.2",
+  "description": "A Quasar form component that uses Zod typing to render form elements.",
+  "type": "module",
+  "author": "@radon-be",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build:js": "tsc -p tsconfig.build.json && copyfiles -u 1 src/**/*.vue dist",
+    "build:types": "vue-tsc --declaration --emitDeclarationOnly --declarationDir dist/types -p tsconfig.types.json",
+    "build": "node -e \"require('fs').rmSync('dist', {recursive:true,force:true})\" && npm run build:js && npm run build:types",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build",
+    "pack:local": "npm run build && npm pack --pack-destination playground-for-package"
+  },
+  "main": "dist/components.js",
+  "types": "dist/types/components.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/components.d.ts",
+      "import": "./dist/components.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^2.6.0",
+    "@types/node": "^24.12.2",
+    "copyfiles": "^2.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "~6.0.2",
+    "vue-tsc": "^3.2.8"
+  },
+  "dependencies": {
+    "radashi": "^12.9.0",
+    "zod": "^4.4.3"
+  },
+  "peerDependencies": {
+    "quasar": "^2.18.0",
+    "vue": "^3.5.0"
+  },
+  "quasar": {
+    "appExtension": {
+      "id": "zod-form",
+      "shortName": "Zod Form",
+      "vueVersion": "3"
+    }
+  }
+}
